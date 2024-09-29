@@ -39,7 +39,7 @@ namespace Thesis
             else
             {
                 // label "error invalid username or passs"
-
+                lblerror.Visible = true;
                 lblerror.Text = "Invalid username or password.";
             }
 
@@ -83,6 +83,11 @@ namespace Thesis
             Registration register_user = new Registration();
             register_user.ShowDialog();
             this.Show();
+
+        }
+
+        private void lblerror_Click(object sender, EventArgs e)
+        {
 
         }
     }

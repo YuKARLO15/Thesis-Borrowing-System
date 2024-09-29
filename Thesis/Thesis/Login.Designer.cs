@@ -94,6 +94,8 @@
             this.lblerror.Size = new System.Drawing.Size(142, 27);
             this.lblerror.TabIndex = 4;
             this.lblerror.Text = "Invalid Show";
+            this.lblerror.Visible = false;
+            this.lblerror.Click += new System.EventHandler(this.lblerror_Click);
             // 
             // Login
             // 
