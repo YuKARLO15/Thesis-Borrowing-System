@@ -59,6 +59,7 @@
             this.txt_copies.Name = "txt_copies";
             this.txt_copies.Size = new System.Drawing.Size(160, 24);
             this.txt_copies.TabIndex = 9;
+            this.txt_copies.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_copies_KeyPress);
             // 
             // txt_publication
             // 
@@ -67,6 +68,7 @@
             this.txt_publication.Name = "txt_publication";
             this.txt_publication.Size = new System.Drawing.Size(160, 24);
             this.txt_publication.TabIndex = 10;
+            this.txt_publication.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_publication_KeyPress);
             // 
             // btn_add
             // 
@@ -79,6 +81,7 @@
             this.btn_add.TabIndex = 11;
             this.btn_add.Text = "ADD";
             this.btn_add.UseVisualStyleBackColor = false;
+            this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
             // 
             // Add_Book
             // 
