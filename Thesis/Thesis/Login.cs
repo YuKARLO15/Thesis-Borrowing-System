@@ -16,7 +16,8 @@ namespace Thesis
 {
     public partial class Login : Form
     {
-        string connectionString = "Server=localhost;Database=thesis borrowing;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+
         public Login()
         {
             InitializeComponent();
@@ -28,26 +29,26 @@ namespace Thesis
             string password = txt_password.Text;
 
 
-            if (ValidateUser(username, password))
+            if (Admin(username, password))
             {
-                // show forms hereeee\
+                MessageBox.Show("Admin Login");
                 this.Hide();
-                Admin adminform = new Admin();
+                Add_Book adminform = new Add_Book();
                 adminform.ShowDialog();
-                this.Show();
             }
-            else
+           else if (ValidateUser(username, password))
             {
-                // label "error invalid username or passs"
-
-                lblerror.Text = "Invalid username or password.";
+                MessageBox.Show("Login Successfully");
+                this.Hide();
             }
-
+            else {
+                MessageBox.Show("Incorrect Student Number or Password");
+            }
         }
 
         private bool ValidateUser(string username, string password)
         {
-            string query = "SELECT COUNT(1) FROM login WHERE username = @username AND password = @password";
+            string query = "SELECT COUNT(1) FROM student_info WHERE Student_ID = @username AND Password = @password";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -77,12 +78,62 @@ namespace Thesis
             }
         }
 
+
+        private bool Admin(string username, string password)
+        {
+            string query = "SELECT COUNT(1) FROM admin WHERE username = @username AND password = @password";
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@Username", username);
+                        command.Parameters.AddWithValue("@Password", password);
+
+
+                        int result = Convert.ToInt32(command.ExecuteScalar());
+
+
+                        return result == 1;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                    return false;
+                }
+            }
+        }
+
+
+
         private void btn_signup_Click(object sender, EventArgs e)
         {
             this.Hide();
             Registration register_user = new Registration();
             register_user.ShowDialog();
             this.Show();
+
+        }
+
+        private void txt_username_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_login_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void txt_username_KeyPress(object sender, KeyPressEventArgs e)
+        {
 
         }
     }
