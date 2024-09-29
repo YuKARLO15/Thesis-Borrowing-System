@@ -110,6 +110,12 @@
     <Compile Include="Admin.Designer.cs">
       <DependentUpon>Admin.cs</DependentUpon>
     </Compile>
+    <Compile Include="admindashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="admindashboard.Designer.cs">
+      <DependentUpon>admindashboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="BorrowReturnPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Admin.resx">
       <DependentUpon>Admin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="admindashboard.resx">
+      <DependentUpon>admindashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BorrowReturnPage.resx">
       <DependentUpon>BorrowReturnPage.cs</DependentUpon>
@@ -195,6 +204,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Receipt %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dashboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dashboard %281%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
