@@ -51,7 +51,7 @@ namespace Thesis
 
             Login loginform = new Login();
             loginform.ShowDialog();
-            this.Close();
+            this.Dispose();
         }
 
         private bool SignupUser(string studentNumber, string password, string studentName, string course)

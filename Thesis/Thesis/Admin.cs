@@ -75,6 +75,13 @@ namespace Thesis
                 }
             }
         }
+
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            admindashboard AdminDashBoard = new admindashboard();
+            AdminDashBoard.Show();
+        }
     }
 
 }
