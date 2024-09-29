@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 namespace Thesis
@@ -16,7 +15,7 @@ namespace Thesis
     public partial class Registration : Form
     {
 
-        string connectionString = "Server=localhost;Database=thesis borrowing;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
 
         public Registration()
         {
@@ -49,12 +48,16 @@ namespace Thesis
                 lblerror.Visible = true;
                 lblerror.Text = "Sign-up failed. Please try again.";
             }
+
+            Login loginform = new Login();
+            loginform.ShowDialog();
+            this.Close();
         }
 
         private bool SignupUser(string studentNumber, string password, string studentName, string course)
         {
-            string query = "INSERT INTO registration (Student_number, Password, Student_name, Course) " +
-                           "VALUES (@studentNumber, @password, @studentName, @course)";
+            string query = "INSERT INTO student_info (Student_ID, Password, Student_Name, Course) " +
+                           "VALUES (@StudentID, @Password, @StudentName, @Course)";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -65,14 +68,13 @@ namespace Thesis
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         // Use parameters to avoid SQL injection attacks
-                        command.Parameters.AddWithValue("@studentNumber", studentNumber);
-                        command.Parameters.AddWithValue("@password", password);
-                        command.Parameters.AddWithValue("@studentName", studentName);
-                        command.Parameters.AddWithValue("@course", course);
+                        command.Parameters.AddWithValue("@StudentID", studentNumber);
+                        command.Parameters.AddWithValue("@Password", password);
+                        command.Parameters.AddWithValue("@StudentName", studentName);
+                        command.Parameters.AddWithValue("@Course", course);
 
                         int result = command.ExecuteNonQuery();
 
-                        // If one row was inserted, return true (sign-up successful)
                         return result > 0;
                     }
                 }
@@ -82,6 +84,20 @@ namespace Thesis
                     return false;
                 }
             }
+        }
+
+        private void txt_studentnumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '-' && !char.IsControl(e.KeyChar))
+            {
+       
+                e.Handled = true;
+            }
+        }
+
+        private void txt_studentnumber_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
