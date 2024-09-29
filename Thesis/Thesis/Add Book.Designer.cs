@@ -33,6 +33,7 @@
             this.txt_copies = new System.Windows.Forms.TextBox();
             this.txt_publication = new System.Windows.Forms.TextBox();
             this.btn_add = new System.Windows.Forms.Button();
+            this.btn_back = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txt_category
@@ -87,6 +88,19 @@
             this.btn_add.UseVisualStyleBackColor = false;
             this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
             // 
+            // btn_back
+            // 
+            this.btn_back.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.btn_back.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_back.ForeColor = System.Drawing.Color.White;
+            this.btn_back.Location = new System.Drawing.Point(31, 473);
+            this.btn_back.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_back.Name = "btn_back";
+            this.btn_back.Size = new System.Drawing.Size(191, 56);
+            this.btn_back.TabIndex = 12;
+            this.btn_back.Text = "BACK";
+            this.btn_back.UseVisualStyleBackColor = false;
+            // 
             // Add_Book
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -94,6 +108,7 @@
             this.BackgroundImage = global::Thesis.Properties.Resources.Add_new_book;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.btn_back);
             this.Controls.Add(this.btn_add);
             this.Controls.Add(this.txt_publication);
             this.Controls.Add(this.txt_copies);
@@ -115,5 +130,6 @@
         private System.Windows.Forms.TextBox txt_copies;
         private System.Windows.Forms.TextBox txt_publication;
         private System.Windows.Forms.Button btn_add;
+        private System.Windows.Forms.Button btn_back;
     }
 }
