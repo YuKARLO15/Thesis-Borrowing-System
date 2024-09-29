@@ -36,7 +36,7 @@ namespace Thesis
                 Add_Book adminform = new Add_Book();
                 adminform.ShowDialog();
             }
-            else if (ValidateUser(username, password))
+           else if (ValidateUser(username, password))
             {
                 MessageBox.Show("Login Successfully");
                 this.Hide();
