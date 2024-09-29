@@ -70,6 +70,7 @@
             this.btn_signup.TabIndex = 7;
             this.btn_signup.Text = "SIGN UP";
             this.btn_signup.UseVisualStyleBackColor = false;
+            this.btn_signup.Click += new System.EventHandler(this.btn_signup_Click);
             // 
             // Admin
             // 
