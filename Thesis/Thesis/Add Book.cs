@@ -56,7 +56,7 @@ namespace Thesis
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-                        // Use parameters to avoid SQL injection attacks
+                        
                         command.Parameters.AddWithValue("@Thesis_Name", thesis_name);
                         command.Parameters.AddWithValue("@Year_Publish", year_publish);
                         command.Parameters.AddWithValue("@Copies", Copies);

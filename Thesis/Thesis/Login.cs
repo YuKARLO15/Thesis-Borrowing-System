@@ -111,8 +111,6 @@ namespace Thesis
             }
         }
 
-
-
         private void btn_signup_Click(object sender, EventArgs e)
         {
             this.Hide();
