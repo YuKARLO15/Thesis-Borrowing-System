@@ -28,18 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Search));
             this.txt_search = new System.Windows.Forms.TextBox();
             this.btn_search = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.ThesisGridView = new System.Windows.Forms.DataGridView();
+            this.btn_back = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.ThesisGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // txt_search
             // 
-            this.txt_search.Location = new System.Drawing.Point(121, 139);
+            this.txt_search.Location = new System.Drawing.Point(161, 171);
+            this.txt_search.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txt_search.Name = "txt_search";
-            this.txt_search.Size = new System.Drawing.Size(135, 20);
+            this.txt_search.Size = new System.Drawing.Size(179, 22);
             this.txt_search.TabIndex = 0;
             // 
             // btn_search
@@ -47,35 +50,66 @@
             this.btn_search.BackColor = System.Drawing.Color.DarkSlateGray;
             this.btn_search.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_search.ForeColor = System.Drawing.Color.White;
-            this.btn_search.Location = new System.Drawing.Point(598, 138);
+            this.btn_search.Location = new System.Drawing.Point(797, 170);
+            this.btn_search.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_search.Name = "btn_search";
-            this.btn_search.Size = new System.Drawing.Size(163, 21);
+            this.btn_search.Size = new System.Drawing.Size(217, 26);
             this.btn_search.TabIndex = 8;
             this.btn_search.Text = "SEARCH";
             this.btn_search.UseVisualStyleBackColor = false;
+            this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
             // 
-            // dataGridView1
+            // ThesisGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(87, 183);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(632, 225);
-            this.dataGridView1.TabIndex = 9;
+            this.ThesisGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.ThesisGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ThesisGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.ThesisGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ThesisGridView.Location = new System.Drawing.Point(116, 225);
+            this.ThesisGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ThesisGridView.Name = "ThesisGridView";
+            this.ThesisGridView.ReadOnly = true;
+            this.ThesisGridView.RowHeadersWidth = 51;
+            this.ThesisGridView.Size = new System.Drawing.Size(843, 277);
+            this.ThesisGridView.TabIndex = 9;
+            // 
+            // btn_back
+            // 
+            this.btn_back.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.btn_back.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_back.ForeColor = System.Drawing.Color.White;
+            this.btn_back.Location = new System.Drawing.Point(912, 34);
+            this.btn_back.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_back.Name = "btn_back";
+            this.btn_back.Size = new System.Drawing.Size(91, 34);
+            this.btn_back.TabIndex = 13;
+            this.btn_back.Text = "BACK";
+            this.btn_back.UseVisualStyleBackColor = false;
+            this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
             // 
             // Search
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.dataGridView1);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.btn_back);
+            this.Controls.Add(this.ThesisGridView);
             this.Controls.Add(this.btn_search);
             this.Controls.Add(this.txt_search);
             this.DoubleBuffered = true;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Search";
             this.Text = "Search";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Load += new System.EventHandler(this.Search_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.ThesisGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -85,6 +119,7 @@
 
         private System.Windows.Forms.TextBox txt_search;
         private System.Windows.Forms.Button btn_search;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView ThesisGridView;
+        private System.Windows.Forms.Button btn_back;
     }
 }
