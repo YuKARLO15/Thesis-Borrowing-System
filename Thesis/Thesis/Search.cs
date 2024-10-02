@@ -63,5 +63,42 @@ namespace Thesis
                 }
             }
         }
+
+        private void btn_search_Click(object sender, EventArgs e)
+        {
+            string category = txt_search.Text.Trim();
+
+            if (!string.IsNullOrEmpty(category))
+            {
+                string query = "SELECT Thesis_Name, Year_Publish, Copies, Category FROM thesis_info WHERE Category LIKE @Category";
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    try
+                    {
+                        connection.Open();
+                        using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                        {
+                            // Add the search parameter directly
+                            cmd.Parameters.AddWithValue("@Category", "%" + category + "%");
+
+                            // Execute the query and display results in DataGridView
+                            DataTable dataTable = new DataTable();
+                            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                            adapter.Fill(dataTable);
+                            ThesisGridView.DataSource = dataTable;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a category to search.");
+            }
+        }
     }
 }
