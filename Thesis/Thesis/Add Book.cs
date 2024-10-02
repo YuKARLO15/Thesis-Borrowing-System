@@ -41,6 +41,11 @@ namespace Thesis
                 MessageBox.Show("Thesis Information Added");
             }
 
+            txt_thesis.Clear();
+            txt_publication.Clear();
+            txt_copies.Clear();
+            txt_category.Clear();
+
         }
 
         private bool SignupAdmin(string thesis_name, string year_publish, string Copies, string Category)
@@ -56,7 +61,7 @@ namespace Thesis
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-                        // Use parameters to avoid SQL injection attacks
+                        
                         command.Parameters.AddWithValue("@Thesis_Name", thesis_name);
                         command.Parameters.AddWithValue("@Year_Publish", year_publish);
                         command.Parameters.AddWithValue("@Copies", Copies);
@@ -89,6 +94,13 @@ namespace Thesis
             {
                 e.Handled = true;
             }
+        }
+
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            admindashboard AdminDashBoard = new admindashboard();
+            AdminDashBoard.Show();
         }
     }
 }

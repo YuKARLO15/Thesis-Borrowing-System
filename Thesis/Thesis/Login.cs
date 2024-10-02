@@ -10,12 +10,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 
 namespace Thesis
 {
     public partial class Login : Form
     {
+
         string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
 
         public Login()
@@ -28,25 +30,71 @@ namespace Thesis
             string username = txt_username.Text;
             string password = txt_password.Text;
 
-
             if (Admin(username, password))
             {
                 MessageBox.Show("Admin Login");
+                admindashboard adminform = new admindashboard();
+                adminform.Show();
                 this.Hide();
-                Add_Book adminform = new Add_Book();
-                adminform.ShowDialog();
             }
-           else if (ValidateUser(username, password))
+            else if (ValidateStudent(username, password))
             {
                 MessageBox.Show("Login Successfully");
-                this.Hide();
+
+                var (studentId, studentName) = LoadStudentInfo(username); 
+
+                if (!string.IsNullOrEmpty(studentName)) 
+                {
+                    BorrowReturnPage borrowReturnPage = new BorrowReturnPage(studentId, studentName); 
+                    borrowReturnPage.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Student name not found.");
+                }
             }
-            else {
+            else
+            {
                 MessageBox.Show("Incorrect Student Number or Password");
             }
         }
 
-        private bool ValidateUser(string username, string password)
+        private (string studentId, string studentName) LoadStudentInfo(string studentId)
+        {
+            string query = "SELECT Student_ID, Student_Name FROM student_info WHERE Student_ID = @StudentId";
+            string studentName = string.Empty;
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@StudentId", studentId);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                studentId = reader["Student_ID"].ToString();
+                                studentName = reader["Student_Name"].ToString();
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading student information: " + ex.Message);
+                }
+            }
+
+            return (studentId, studentName); 
+        }
+
+
+        private bool ValidateStudent(string username, string password)
         {
             string query = "SELECT COUNT(1) FROM student_info WHERE Student_ID = @username AND Password = @password";
 
@@ -111,14 +159,11 @@ namespace Thesis
             }
         }
 
-
-
         private void btn_signup_Click(object sender, EventArgs e)
         {
             this.Hide();
             Registration register_user = new Registration();
-            register_user.ShowDialog();
-            this.Show();
+            register_user.Show();
 
         }
 
@@ -136,6 +181,7 @@ namespace Thesis
         {
 
         }
+
     }
 }
       
