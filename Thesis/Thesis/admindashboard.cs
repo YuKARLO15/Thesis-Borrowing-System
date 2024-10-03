@@ -38,5 +38,12 @@ namespace Thesis
             SearchThesis.Show();
             this.Hide();
         }
+
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Login login = new Login();
+            login.Show();
+        }
     }
 }
