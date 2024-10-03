@@ -64,26 +64,43 @@ namespace Thesis
         // Trigger the search on button click using a single TextBox
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string searchValue = txt_search.Text;   // One TextBox for input
+            string searchValue = txt_search.Text.Trim(); // Capture input from the TextBox
+            string selectedCriteria = cmbSearchCriteria.SelectedItem.ToString(); // Get selected criteria
 
             if (!string.IsNullOrEmpty(searchValue))
             {
-                // Modify the query to search in Category, Status (from status_info), and Title (Thesis_Name)
+                // Initialize the query based on the selected criteria
                 string query = @"
-                    SELECT 
-                        thesis_info.Thesis_Name, 
-                        thesis_info.Year_Publish, 
-                        thesis_info.Copies, 
-                        thesis_info.Category, 
-                        borrowing.Status
-                    FROM 
-                        thesis_info
-                    INNER JOIN 
-                        status_info ON thesis_info.Thesis_Name = borrowing.Thesis_Name
-                    WHERE 
-                        thesis_info.Category LIKE @SearchValue 
-                        OR borrowing.Status LIKE @SearchValue 
-                        OR thesis_info.Thesis_Name LIKE @SearchValue";
+            SELECT 
+                thesis_info.Thesis_Name, 
+                thesis_info.Year_Publish, 
+                thesis_info.Copies, 
+                thesis_info.Category,
+                borrowing.Status
+            FROM 
+                thesis_info
+            INNER JOIN 
+                borrowing ON thesis_info.Thesis_Name = borrowing.Thesis_Name
+            WHERE
+                1=1"; // Start with a condition that is always true
+
+                // Add conditions based on the selected criteria
+                if (selectedCriteria == "Title")
+                {
+                    query += " AND thesis_info.Thesis_Name = @SearchValue";
+                }
+                else if (selectedCriteria == "Category")
+                {
+                    query += " AND thesis_info.Category = @SearchValue";
+                }
+                else if (selectedCriteria == "Status")
+                {
+                    query += " AND borrowing.Status = @SearchValue";
+                }
+
+
+                MessageBox.Show("Executing Query: " + query);
+                MessageBox.Show("Searching for: " + searchValue);
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
@@ -92,24 +109,33 @@ namespace Thesis
                         connection.Open();
                         using (MySqlCommand cmd = new MySqlCommand(query, connection))
                         {
-                            // Add parameter for the search value
-                            cmd.Parameters.AddWithValue("@SearchValue", "%" + searchValue + "%");
+                            cmd.Parameters.AddWithValue("@SearchValue", searchValue); // Pass exact search value
 
                             DataTable dataTable = new DataTable();
                             MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                             adapter.Fill(dataTable);
-                            ThesisGridView.DataSource = dataTable;
+
+
+                            if (dataTable.Rows.Count > 0)
+                            {
+                                ThesisGridView.DataSource = dataTable; // Set the DataGridView source
+                            }
+                            else
+                            {
+                                MessageBox.Show("No results found."); // Notify if no results
+                                ThesisGridView.DataSource = null; // Clear the DataGridView if no results
+                            }
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error: " + ex.Message);
+                        MessageBox.Show("Error: " + ex.Message); // Show error messages
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Please enter a value to search.");
+                MessageBox.Show("Please enter a value to search."); // Prompt for input
             }
         }
     }
