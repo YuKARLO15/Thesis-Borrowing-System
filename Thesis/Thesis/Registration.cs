@@ -15,7 +15,7 @@ namespace Thesis
     public partial class Registration : Form
     {
 
-        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
 
         public Registration()
         {
@@ -56,6 +56,9 @@ namespace Thesis
 
         private bool SignupUser(string studentNumber, string password, string studentName, string course)
         {
+
+            string hashedPassword = Hashing.ComputeSha256Hash(password);
+
             string query = "INSERT INTO student_info (Student_ID, Password, Student_Name, Course) " +
                            "VALUES (@StudentID, @Password, @StudentName, @Course)";
 
@@ -69,7 +72,7 @@ namespace Thesis
                     {
                         // Use parameters to avoid SQL injection attacks
                         command.Parameters.AddWithValue("@StudentID", studentNumber);
-                        command.Parameters.AddWithValue("@Password", password);
+                        command.Parameters.AddWithValue("@Password", hashedPassword);
                         command.Parameters.AddWithValue("@StudentName", studentName);
                         command.Parameters.AddWithValue("@Course", course);
 

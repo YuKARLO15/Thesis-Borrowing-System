@@ -13,7 +13,7 @@ namespace Thesis
 {
     public partial class Search : Form
     {
-        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
         public Search()
         {
             InitializeComponent();

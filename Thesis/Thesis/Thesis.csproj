@@ -122,6 +122,7 @@
     <Compile Include="BorrowReturnPage.Designer.cs">
       <DependentUpon>BorrowReturnPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Hashing.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
