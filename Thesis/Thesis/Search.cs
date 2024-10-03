@@ -1,19 +1,14 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Thesis
 {
     public partial class Search : Form
     {
-        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
+
         public Search()
         {
             InitializeComponent();
@@ -30,47 +25,65 @@ namespace Thesis
         {
             LoadData();
         }
+
         private void LoadData()
         {
-            // Query to select data from the table
-            string query = "SELECT Thesis_Name, Year_Publish, Copies, Category FROM thesis_info";
+            // SQL query to join thesis_info and status_info tables without aliases
+            string query = @"
+                SELECT 
+                    thesis_info.Thesis_Name, 
+                    thesis_info.Year_Publish, 
+                    thesis_info.Copies, 
+                    thesis_info.Category, 
+                    borrowing.Status
+                FROM 
+                    thesis_info
+                INNER JOIN 
+                    borrowing ON thesis_info.Thesis_Name = borrowing.Thesis_Name";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
                 {
-                    // Open the connection
                     connection.Open();
-
-                    // Create a MySQL command
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
-                        // Create a DataTable to hold the query results
                         DataTable dataTable = new DataTable();
-
-                        // Fill the DataTable using a DataAdapter
                         MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                         adapter.Fill(dataTable);
-
-                        // Bind the DataTable to the DataGridView
                         ThesisGridView.DataSource = dataTable;
                     }
                 }
                 catch (Exception ex)
                 {
-                    // Show error message if something goes wrong
                     MessageBox.Show("Error: " + ex.Message);
                 }
             }
         }
 
-        private void btn_search_Click(object sender, EventArgs e)
+        // Trigger the search on button click using a single TextBox
+        private void btnSearch_Click(object sender, EventArgs e)
         {
-            string category = txt_search.Text.Trim();
+            string searchValue = txt_search.Text;   // One TextBox for input
 
-            if (!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(searchValue))
             {
-                string query = "SELECT Thesis_Name, Year_Publish, Copies, Category FROM thesis_info WHERE Category LIKE @Category";
+                // Modify the query to search in Category, Status (from status_info), and Title (Thesis_Name)
+                string query = @"
+                    SELECT 
+                        thesis_info.Thesis_Name, 
+                        thesis_info.Year_Publish, 
+                        thesis_info.Copies, 
+                        thesis_info.Category, 
+                        borrowing.Status
+                    FROM 
+                        thesis_info
+                    INNER JOIN 
+                        status_info ON thesis_info.Thesis_Name = borrowing.Thesis_Name
+                    WHERE 
+                        thesis_info.Category LIKE @SearchValue 
+                        OR borrowing.Status LIKE @SearchValue 
+                        OR thesis_info.Thesis_Name LIKE @SearchValue";
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
@@ -79,10 +92,9 @@ namespace Thesis
                         connection.Open();
                         using (MySqlCommand cmd = new MySqlCommand(query, connection))
                         {
-                            // Add the search parameter directly
-                            cmd.Parameters.AddWithValue("@Category", "%" + category + "%");
+                            // Add parameter for the search value
+                            cmd.Parameters.AddWithValue("@SearchValue", "%" + searchValue + "%");
 
-                            // Execute the query and display results in DataGridView
                             DataTable dataTable = new DataTable();
                             MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                             adapter.Fill(dataTable);
@@ -97,7 +109,7 @@ namespace Thesis
             }
             else
             {
-                MessageBox.Show("Please enter a category to search.");
+                MessageBox.Show("Please enter a value to search.");
             }
         }
     }

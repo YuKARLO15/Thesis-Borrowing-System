@@ -1,4 +1,6 @@
-﻿namespace Thesis
+﻿using System;
+
+namespace Thesis
 {
     partial class Search
     {
@@ -112,6 +114,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.ThesisGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
+        }
+
+        private void btn_search_Click(object sender, EventArgs e)
+        {
+
 
         }
 
