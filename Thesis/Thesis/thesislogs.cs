@@ -5,11 +5,11 @@ using System.Windows.Forms;
 
 namespace Thesis
 {
-    public partial class Search : Form
+    public partial class thesislogs : Form
     {
         string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
 
-        public Search()
+        public thesislogs()
         {
             InitializeComponent();
         }
@@ -31,15 +31,17 @@ namespace Thesis
             // SQL query to join thesis_info and status_info tables without aliases
             string query = @"
                 SELECT 
-                    thesis_info.Thesis_Name, 
-                    thesis_info.Year_Publish, 
-                    thesis_info.Copies, 
-                    thesis_info.Category, 
-                    borrowing.Status
-                FROM 
-                    thesis_info
-                INNER JOIN 
-                    borrowing ON thesis_info.Thesis_Name = borrowing.Thesis_Name";
+                borrowing.Borrowed_ID,
+                borrowing.Thesis_Name, 
+                borrowing.Status,
+                borrowing.Date_Borrowed,
+                borrowing.Student_ID,
+                student_info.Student_Name
+
+            FROM 
+                borrowing
+            INNER JOIN 
+                student_info ON borrowing.Student_ID = student_info.Student_ID";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -72,15 +74,19 @@ namespace Thesis
                 // Initialize the query based on the selected criteria
                 string query = @"
             SELECT 
-                thesis_info.Thesis_Name, 
-                thesis_info.Year_Publish, 
-                thesis_info.Copies, 
-                thesis_info.Category,
-                borrowing.Status
+                borrowing.Borrowed_ID,
+                borrowing.Thesis_Name, 
+                borrowing.Status,
+                borrowing.Date_Borrowed,
+                borrowing.Student_ID,
+                student_info.Student_Name
+
+
             FROM 
-                thesis_info
+                borrowing
             INNER JOIN 
-                borrowing ON thesis_info.Thesis_Name = borrowing.Thesis_Name
+                student_info ON borrowing.Student_ID = student_info.Student_ID
+                
             WHERE
                 1=1"; // Start with a condition that is always true
 
@@ -89,15 +95,18 @@ namespace Thesis
                 {
                     query += " AND thesis_info.Thesis_Name = @SearchValue";
                 }
-                else if (selectedCriteria == "Category")
-                {
-                    query += " AND thesis_info.Category = @SearchValue";
-                }
                 else if (selectedCriteria == "Status")
                 {
                     query += " AND borrowing.Status = @SearchValue";
                 }
-
+                else if (selectedCriteria == "Student_ID")
+                {
+                    query += " AND borrowing.Student_ID = @SearchValue";
+                }
+                else if (selectedCriteria == "Student_Name")
+                {
+                    query += " AND student_info.Student_Name = @SearchValue";
+                }
 
                 MessageBox.Show("Executing Query: " + query);
                 MessageBox.Show("Searching for: " + searchValue);
@@ -139,9 +148,11 @@ namespace Thesis
             }
         }
 
-        private void btn_search_Click(object sender, EventArgs e)
+        private void btn_Sall_Click(object sender, EventArgs e)
         {
-
+            LoadData();
+            txt_search.Text = "";
+            cmbSearchCriteria.SelectedIndex = -1;
         }
     }
 }
