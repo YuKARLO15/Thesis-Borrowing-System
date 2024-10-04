@@ -47,7 +47,7 @@ namespace Thesis
             this.cmbSearchCriteria.Items.AddRange(new object[] {
             "Title",
             "Category",
-            "Status"});
+            "Year_Published"});
             this.cmbSearchCriteria.Location = new System.Drawing.Point(376, 170);
             this.cmbSearchCriteria.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbSearchCriteria.Name = "cmbSearchCriteria";
@@ -151,12 +151,14 @@ namespace Thesis
 
         private void btn_search_Click_1(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
         private void btn_Sall_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            LoadData();
+            txt_search.Text = "";
+            cmbSearchCriteria.SelectedIndex = -1;
         }
 
         #endregion
