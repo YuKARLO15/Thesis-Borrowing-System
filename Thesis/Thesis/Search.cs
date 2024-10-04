@@ -138,5 +138,10 @@ namespace Thesis
                 MessageBox.Show("Please enter a value to search."); // Prompt for input
             }
         }
+
+        private void btn_search_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
