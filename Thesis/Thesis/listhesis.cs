@@ -86,21 +86,32 @@ namespace Thesis
                 1=1"; // Start with a condition that is always true
 
                 // Add conditions based on the selected criteria
-                if (selectedCriteria == "Title")
+                try
                 {
-                    query += " AND thesis_info.Thesis_Name = @SearchValue";
+                    if (selectedCriteria == "Title")
+                    {
+                        query += " AND thesis_info.Thesis_Name = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Category")
+                    {
+                        query += " AND thesis_info.Category = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Year_Published")
+                    {
+                        query += " AND thesis_info.Year_Publish = @SearchValue";
+                    }
+                    else if (selectedCriteria == "")
+                    {
+                        MessageBox.Show("Please select a creteria for this search ");
+                    }
+
                 }
-                else if (selectedCriteria == "Category")
+                catch
                 {
-                    query += " AND thesis_info.Category = @SearchValue";
-                }
-                else if (selectedCriteria == "Status")
-                {
-                    query += " AND  thesis_info.Copies = @SearchValue";
+                    MessageBox.Show("Creteria does not match datatype ");
                 }
 
 
-                MessageBox.Show("Executing Query: " + query);
                 MessageBox.Show("Searching for: " + searchValue);
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
