@@ -14,6 +14,9 @@ namespace Thesis
     public partial class listhesis : Form
     {
         public listhesis()
+        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+
+        public Search()
         {
             InitializeComponent();
         }
@@ -144,7 +147,5 @@ namespace Thesis
         {
 
         }
-
-      
     }
 }

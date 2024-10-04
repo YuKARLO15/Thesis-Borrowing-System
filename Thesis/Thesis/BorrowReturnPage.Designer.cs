@@ -35,9 +35,11 @@
             this.cb_thesistitle = new System.Windows.Forms.ComboBox();
             this.date_current = new System.Windows.Forms.DateTimePicker();
             this.date_due = new System.Windows.Forms.DateTimePicker();
-            this.lbl_status = new System.Windows.Forms.Label();
             this.btn_add = new System.Windows.Forms.Button();
             this.btn_back = new System.Windows.Forms.Button();
+            this.cb_category_return = new System.Windows.Forms.ComboBox();
+            this.cb_title_return = new System.Windows.Forms.ComboBox();
+            this.lbl_status = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txt_process
@@ -48,7 +50,7 @@
             this.txt_process.Items.AddRange(new object[] {
             "Borrowing",
             "Returning"});
-            this.txt_process.Location = new System.Drawing.Point(199, 121);
+            this.txt_process.Location = new System.Drawing.Point(203, 121);
             this.txt_process.Margin = new System.Windows.Forms.Padding(2);
             this.txt_process.Name = "txt_process";
             this.txt_process.Size = new System.Drawing.Size(145, 28);
@@ -65,14 +67,13 @@
             this.txt_studentnum.ReadOnly = true;
             this.txt_studentnum.Size = new System.Drawing.Size(160, 23);
             this.txt_studentnum.TabIndex = 1;
+            this.txt_studentnum.TextChanged += new System.EventHandler(this.txt_studentnum_TextChanged);
             // 
             // cb_category
             // 
+            this.cb_category.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_category.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_category.FormattingEnabled = true;
-            this.cb_category.Items.AddRange(new object[] {
-            "Transportation",
-            "Web Application"});
             this.cb_category.Location = new System.Drawing.Point(310, 243);
             this.cb_category.Margin = new System.Windows.Forms.Padding(2);
             this.cb_category.Name = "cb_category";
@@ -123,20 +124,6 @@
             this.date_due.TabIndex = 6;
             this.date_due.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.date_due_KeyPress);
             // 
-            // lbl_status
-            // 
-            this.lbl_status.AutoSize = true;
-            this.lbl_status.BackColor = System.Drawing.Color.Transparent;
-            this.lbl_status.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_status.ForeColor = System.Drawing.Color.White;
-            this.lbl_status.Location = new System.Drawing.Point(658, 288);
-            this.lbl_status.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl_status.Name = "lbl_status";
-            this.lbl_status.Size = new System.Drawing.Size(73, 17);
-            this.lbl_status.TabIndex = 7;
-            this.lbl_status.Text = "available";
-            this.lbl_status.Visible = false;
-            // 
             // btn_add
             // 
             this.btn_add.BackColor = System.Drawing.Color.DarkSlateGray;
@@ -162,6 +149,43 @@
             this.btn_back.UseVisualStyleBackColor = false;
             this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
             // 
+            // cb_category_return
+            // 
+            this.cb_category_return.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_category_return.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_category_return.FormattingEnabled = true;
+            this.cb_category_return.Location = new System.Drawing.Point(309, 243);
+            this.cb_category_return.Margin = new System.Windows.Forms.Padding(2);
+            this.cb_category_return.Name = "cb_category_return";
+            this.cb_category_return.Size = new System.Drawing.Size(159, 25);
+            this.cb_category_return.TabIndex = 14;
+            this.cb_category_return.SelectedIndexChanged += new System.EventHandler(this.cb_category_return_SelectedIndexChanged);
+            // 
+            // cb_title_return
+            // 
+            this.cb_title_return.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_title_return.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_title_return.FormattingEnabled = true;
+            this.cb_title_return.Location = new System.Drawing.Point(311, 280);
+            this.cb_title_return.Margin = new System.Windows.Forms.Padding(2);
+            this.cb_title_return.Name = "cb_title_return";
+            this.cb_title_return.Size = new System.Drawing.Size(230, 25);
+            this.cb_title_return.TabIndex = 15;
+            this.cb_title_return.SelectedIndexChanged += new System.EventHandler(this.cb_title_return_SelectedIndexChanged);
+            // 
+            // lbl_status
+            // 
+            this.lbl_status.AutoSize = true;
+            this.lbl_status.BackColor = System.Drawing.Color.Transparent;
+            this.lbl_status.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_status.ForeColor = System.Drawing.Color.White;
+            this.lbl_status.Location = new System.Drawing.Point(658, 288);
+            this.lbl_status.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_status.Name = "lbl_status";
+            this.lbl_status.Size = new System.Drawing.Size(13, 17);
+            this.lbl_status.TabIndex = 7;
+            this.lbl_status.Text = ".";
+            // 
             // BorrowReturnPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -169,6 +193,8 @@
             this.BackgroundImage = global::Thesis.Properties.Resources.Receipt__1_;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.cb_title_return);
+            this.Controls.Add(this.cb_category_return);
             this.Controls.Add(this.btn_back);
             this.Controls.Add(this.btn_add);
             this.Controls.Add(this.lbl_status);
@@ -198,8 +224,10 @@
         private System.Windows.Forms.ComboBox cb_thesistitle;
         private System.Windows.Forms.DateTimePicker date_current;
         private System.Windows.Forms.DateTimePicker date_due;
-        private System.Windows.Forms.Label lbl_status;
         private System.Windows.Forms.Button btn_add;
         private System.Windows.Forms.Button btn_back;
+        private System.Windows.Forms.ComboBox cb_category_return;
+        private System.Windows.Forms.ComboBox cb_title_return;
+        private System.Windows.Forms.Label lbl_status;
     }
 }
