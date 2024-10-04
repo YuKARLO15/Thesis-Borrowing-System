@@ -154,5 +154,10 @@ namespace Thesis
             txt_search.Text = "";
             cmbSearchCriteria.SelectedIndex = -1;
         }
+
+        private void ThesisGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

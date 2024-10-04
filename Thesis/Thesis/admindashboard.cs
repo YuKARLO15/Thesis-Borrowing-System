@@ -53,7 +53,9 @@ namespace Thesis
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            this.Hide();
+            listhesis listhesis = new listhesis();
+            listhesis.Show();
         }
     }
 }
