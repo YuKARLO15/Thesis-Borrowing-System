@@ -40,38 +40,37 @@
             // txt_studentnumber
             // 
             this.txt_studentnumber.Font = new System.Drawing.Font("Microsoft YaHei", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_studentnumber.Location = new System.Drawing.Point(420, 167);
-            this.txt_studentnumber.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_studentnumber.Location = new System.Drawing.Point(315, 136);
+            this.txt_studentnumber.MaxLength = 10;
             this.txt_studentnumber.Name = "txt_studentnumber";
-            this.txt_studentnumber.Size = new System.Drawing.Size(212, 38);
+            this.txt_studentnumber.Size = new System.Drawing.Size(193, 32);
             this.txt_studentnumber.TabIndex = 3;
+            this.txt_studentnumber.TextChanged += new System.EventHandler(this.txt_studentnumber_TextChanged);
+            this.txt_studentnumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_studentnumber_KeyPress);
             // 
             // txt_password
             // 
             this.txt_password.Font = new System.Drawing.Font("Microsoft YaHei", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_password.Location = new System.Drawing.Point(420, 213);
-            this.txt_password.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_password.Location = new System.Drawing.Point(315, 173);
             this.txt_password.Name = "txt_password";
             this.txt_password.PasswordChar = '*';
-            this.txt_password.Size = new System.Drawing.Size(212, 38);
+            this.txt_password.Size = new System.Drawing.Size(193, 32);
             this.txt_password.TabIndex = 4;
             // 
             // txt_studentname
             // 
             this.txt_studentname.Font = new System.Drawing.Font("Microsoft YaHei", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_studentname.Location = new System.Drawing.Point(420, 259);
-            this.txt_studentname.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_studentname.Location = new System.Drawing.Point(315, 210);
             this.txt_studentname.Name = "txt_studentname";
-            this.txt_studentname.Size = new System.Drawing.Size(212, 38);
+            this.txt_studentname.Size = new System.Drawing.Size(315, 32);
             this.txt_studentname.TabIndex = 5;
             // 
             // txt_course
             // 
             this.txt_course.Font = new System.Drawing.Font("Microsoft YaHei", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_course.Location = new System.Drawing.Point(420, 370);
-            this.txt_course.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_course.Location = new System.Drawing.Point(315, 301);
             this.txt_course.Name = "txt_course";
-            this.txt_course.Size = new System.Drawing.Size(212, 38);
+            this.txt_course.Size = new System.Drawing.Size(160, 32);
             this.txt_course.TabIndex = 6;
             // 
             // btn_signup
@@ -79,10 +78,9 @@
             this.btn_signup.BackColor = System.Drawing.Color.DarkSlateGray;
             this.btn_signup.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_signup.ForeColor = System.Drawing.Color.White;
-            this.btn_signup.Location = new System.Drawing.Point(808, 450);
-            this.btn_signup.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_signup.Location = new System.Drawing.Point(606, 366);
             this.btn_signup.Name = "btn_signup";
-            this.btn_signup.Size = new System.Drawing.Size(163, 49);
+            this.btn_signup.Size = new System.Drawing.Size(122, 40);
             this.btn_signup.TabIndex = 7;
             this.btn_signup.Text = "SIGN UP";
             this.btn_signup.UseVisualStyleBackColor = false;
@@ -94,9 +92,10 @@
             this.lblerror.BackColor = System.Drawing.Color.Transparent;
             this.lblerror.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblerror.ForeColor = System.Drawing.Color.White;
-            this.lblerror.Location = new System.Drawing.Point(296, 472);
+            this.lblerror.Location = new System.Drawing.Point(222, 384);
+            this.lblerror.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblerror.Name = "lblerror";
-            this.lblerror.Size = new System.Drawing.Size(142, 27);
+            this.lblerror.Size = new System.Drawing.Size(114, 22);
             this.lblerror.TabIndex = 8;
             this.lblerror.Text = "Invalid Show";
             this.lblerror.UseMnemonic = false;
@@ -104,11 +103,11 @@
             // 
             // Registration
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.lblerror);
             this.Controls.Add(this.btn_signup);
             this.Controls.Add(this.txt_course);
@@ -116,7 +115,6 @@
             this.Controls.Add(this.txt_password);
             this.Controls.Add(this.txt_studentnumber);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Registration";
             this.Text = "Registration";
             this.ResumeLayout(false);

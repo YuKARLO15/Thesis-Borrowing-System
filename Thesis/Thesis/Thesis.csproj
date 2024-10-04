@@ -110,6 +110,18 @@
     <Compile Include="Admin.Designer.cs">
       <DependentUpon>Admin.cs</DependentUpon>
     </Compile>
+    <Compile Include="admindashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="admindashboard.Designer.cs">
+      <DependentUpon>admindashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BorrowReturnPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BorrowReturnPage.Designer.cs">
+      <DependentUpon>BorrowReturnPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,6 +154,12 @@
     <EmbeddedResource Include="Admin.resx">
       <DependentUpon>Admin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="admindashboard.resx">
+      <DependentUpon>admindashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BorrowReturnPage.resx">
+      <DependentUpon>BorrowReturnPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -153,6 +171,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Receipt.resx">
       <DependentUpon>Receipt.cs</DependentUpon>
@@ -176,6 +195,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Receipt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add new book.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Receipt %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dashboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dashboard %281%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
