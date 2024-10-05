@@ -34,9 +34,28 @@ namespace Thesis
 
         private void btn_search_Click(object sender, EventArgs e)
         {
-            Search SearchThesis = new Search();
+            thesislogs SearchThesis = new thesislogs();
             SearchThesis.Show();
             this.Hide();
+        }
+
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Login login = new Login();
+            login.Show();
+        }
+
+        private void admindashboard_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            listhesis listhesis = new listhesis();
+            listhesis.Show();
         }
     }
 }
