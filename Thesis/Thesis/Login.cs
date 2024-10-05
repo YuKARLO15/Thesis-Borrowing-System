@@ -96,6 +96,9 @@ namespace Thesis
 
         private bool ValidateStudent(string username, string password)
         {
+
+            string hashedPassword = Hashing.ComputeSha256Hash(password);
+
             string query = "SELECT COUNT(1) FROM student_info WHERE Student_ID = @username AND Password = @password";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -109,7 +112,7 @@ namespace Thesis
                     {
 
                         command.Parameters.AddWithValue("@Username", username);
-                        command.Parameters.AddWithValue("@Password", password);
+                        command.Parameters.AddWithValue("@Password", hashedPassword);
 
 
                         int result = Convert.ToInt32(command.ExecuteScalar());
@@ -129,6 +132,9 @@ namespace Thesis
 
         private bool Admin(string username, string password)
         {
+
+            string hashedPassword = Hashing.ComputeSha256Hash(password);
+
             string query = "SELECT COUNT(1) FROM admin WHERE username = @username AND password = @password";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -142,7 +148,7 @@ namespace Thesis
                     {
 
                         command.Parameters.AddWithValue("@Username", username);
-                        command.Parameters.AddWithValue("@Password", password);
+                        command.Parameters.AddWithValue("@Password", hashedPassword);
 
 
                         int result = Convert.ToInt32(command.ExecuteScalar());
