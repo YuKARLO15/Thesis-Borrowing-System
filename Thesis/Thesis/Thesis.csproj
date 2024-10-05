@@ -190,8 +190,6 @@
     </Compile>
     <Compile Include="thesislogs.Designer.cs">
       <DependentUpon>thesislogs.cs</DependentUpon>
-    <Compile Include="thesislogs.Designer.cs">
-      <DependentUpon>thesislogs.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Add Book.resx">
       <DependentUpon>Add Book.cs</DependentUpon>
