@@ -33,7 +33,7 @@ namespace Thesis
             if (Admin(username, password))
             {
                 MessageBox.Show("Admin Login");
-                admindashboard adminform = new admindashboard();
+                admindashboard adminform = new admindashboard(username,password);
                 adminform.Show();
                 this.Hide();
             }
@@ -58,6 +58,7 @@ namespace Thesis
             {
                 MessageBox.Show("Incorrect Student Number or Password");
             }
+
         }
 
         private (string studentId, string studentName) LoadStudentInfo(string studentId)
