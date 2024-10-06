@@ -18,7 +18,7 @@ namespace Thesis
     public partial class Login : Form
     {
 
-        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
 
         public Login()
         {
@@ -33,7 +33,7 @@ namespace Thesis
             if (Admin(username, password))
             {
                 MessageBox.Show("Admin Login");
-                admindashboard adminform = new admindashboard();
+                admindashboard adminform = new admindashboard(username,password);
                 adminform.Show();
                 this.Hide();
             }
@@ -58,6 +58,7 @@ namespace Thesis
             {
                 MessageBox.Show("Incorrect Student Number or Password");
             }
+
         }
 
         private (string studentId, string studentName) LoadStudentInfo(string studentId)
@@ -96,6 +97,9 @@ namespace Thesis
 
         private bool ValidateStudent(string username, string password)
         {
+
+            string hashedPassword = Hashing.ComputeSha256Hash(password);
+
             string query = "SELECT COUNT(1) FROM student_info WHERE Student_ID = @username AND Password = @password";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -109,7 +113,7 @@ namespace Thesis
                     {
 
                         command.Parameters.AddWithValue("@Username", username);
-                        command.Parameters.AddWithValue("@Password", password);
+                        command.Parameters.AddWithValue("@Password", hashedPassword);
 
 
                         int result = Convert.ToInt32(command.ExecuteScalar());
@@ -129,6 +133,9 @@ namespace Thesis
 
         private bool Admin(string username, string password)
         {
+
+            string hashedPassword = Hashing.ComputeSha256Hash(password);
+
             string query = "SELECT COUNT(1) FROM admin WHERE username = @username AND password = @password";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -142,7 +149,7 @@ namespace Thesis
                     {
 
                         command.Parameters.AddWithValue("@Username", username);
-                        command.Parameters.AddWithValue("@Password", password);
+                        command.Parameters.AddWithValue("@Password", hashedPassword);
 
 
                         int result = Convert.ToInt32(command.ExecuteScalar());

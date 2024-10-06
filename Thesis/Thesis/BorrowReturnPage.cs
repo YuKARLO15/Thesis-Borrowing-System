@@ -40,7 +40,7 @@ namespace Thesis
             txt_studentnum.Text = studentId; 
         }
 
-        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
 
         private void BorrowReturnPage_Load(object sender, EventArgs e)
         {
@@ -84,6 +84,7 @@ namespace Thesis
                     // After borrowing, refresh the thesis titles and categories
                     LoadThesisTitles();
                     LoadUniqueCategories(); // Load categories again to ensure they are up to date
+                  
                 }
                 else if (selectedStatus == "Returning")
                 {
@@ -99,6 +100,7 @@ namespace Thesis
                     
                     LoadBorrowedThesisTitles(studentID);
                     LoadThesisTitles(); 
+        
                 }
                 else
                 {
@@ -109,6 +111,7 @@ namespace Thesis
             {
                 MessageBox.Show("Please select a status from the dropdown.");
             }
+            
 
            
         }
@@ -703,6 +706,13 @@ namespace Thesis
                 string selectedTitle = cb_title_return.SelectedItem.ToString();
                 LoadCategory(selectedTitle);
             }
+        }
+
+        private void btn_findthesis_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            listhesis listhesis = new listhesis();
+            listhesis.Show();
         }
     }
 }

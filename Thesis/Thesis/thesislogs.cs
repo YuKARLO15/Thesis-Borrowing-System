@@ -34,7 +34,7 @@ namespace Thesis
                 borrowing.Borrowed_ID,
                 borrowing.Thesis_Name, 
                 borrowing.Status,
-                borrowing.Date_Borrowed,
+                DATE_FORMAT(borrowing.Date_Borrowed, '%Y-%m-%d') AS Date_Borrowed, 
                 borrowing.Student_ID,
                 student_info.Student_Name
 
@@ -42,6 +42,7 @@ namespace Thesis
                 borrowing
             INNER JOIN 
                 student_info ON borrowing.Student_ID = student_info.Student_ID";
+
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -62,6 +63,8 @@ namespace Thesis
                 }
             }
         }
+
+
 
         // Trigger the search on button click using a single TextBox
         private void btnSearch_Click(object sender, EventArgs e)
@@ -91,21 +94,37 @@ namespace Thesis
                 1=1"; // Start with a condition that is always true
 
                 // Add conditions based on the selected criteria
-                if (selectedCriteria == "Title")
+                try
                 {
-                    query += " AND thesis_info.Thesis_Name = @SearchValue";
+                    if (selectedCriteria == "Title")
+                    {
+                        query += " AND borrowing.Thesis_Name = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Status")
+                    {
+                        query += " AND borrowing.Status = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Student_ID")
+                    {
+                        query += " AND borrowing.Student_ID = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Student_Name")
+                    {
+                        query += " AND student_info.Student_Name = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Date_Borrowed")
+                    {
+                        query += " AND borrowing.Date_Borrowed = @SearchValue";
+                    }
+                    else if (selectedCriteria == "")
+                    {
+                        MessageBox.Show("Please select a creteria for this search ");
+                    }
+
                 }
-                else if (selectedCriteria == "Status")
+                catch
                 {
-                    query += " AND borrowing.Status = @SearchValue";
-                }
-                else if (selectedCriteria == "Student_ID")
-                {
-                    query += " AND borrowing.Student_ID = @SearchValue";
-                }
-                else if (selectedCriteria == "Student_Name")
-                {
-                    query += " AND student_info.Student_Name = @SearchValue";
+                    MessageBox.Show("Creteria does not match datatype ");
                 }
 
                 MessageBox.Show("Executing Query: " + query);
