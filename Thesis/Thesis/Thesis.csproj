@@ -158,12 +158,6 @@
     <Compile Include="listhesis.Designer.cs">
       <DependentUpon>listhesis.cs</DependentUpon>
     </Compile>
-    <Compile Include="listhesis.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="listhesis.Designer.cs">
-      <DependentUpon>listhesis.cs</DependentUpon>
-    </Compile>
     <Compile Include="Hashing.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
