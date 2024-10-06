@@ -12,9 +12,14 @@ namespace Thesis
 {
     public partial class admindashboard : Form
     {
-        public admindashboard()
+        public admindashboard(string username, string password )
         {
             InitializeComponent();
+            if ( username == "admin1"  ) {
+                lBLADDUSER.Visible = true;
+                btn_adduser.Visible = true;
+
+            }
         }
 
         private void add_thesis_Click(object sender, EventArgs e)
