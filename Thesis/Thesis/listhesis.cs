@@ -8,22 +8,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Thesis.Login;
 
 namespace Thesis
 {
     public partial class listhesis : Form
     {
-        public listhesis()
+
+        private int adminstatus;
+        private int studentStatus;
+
+        public listhesis(int adminstatus) // Constructor
         {
             InitializeComponent();
+            this.adminstatus = adminstatus;
         }
 
-        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
+
+        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
         private void btn_back_Click_1(object sender, EventArgs e)
         {
-            this.Hide();
-            admindashboard AdminDashBoard = new admindashboard();
-            AdminDashBoard.Show();
+            int adminstatus = UserSession.AdminStatus;
+            string username = UserSession.Username;
+
+            // Check if the user is an admin
+            if (adminstatus == 1 && !string.IsNullOrEmpty(username))
+            {
+                // Go back to the admin dashboard
+                admindashboard adminDashboard = new admindashboard(adminstatus, username);
+                adminDashboard.Show();
+                this.Hide(); // Hide the current form
+            }
+            else if (UserSession.StudentStatus == 2 && !string.IsNullOrEmpty(UserSession.StudentUsername))
+            {
+                // If it's a student, go back to the BorrowReturnPage
+                BorrowReturnPage BorrowReturnForm = BorrowReturnPage.Instance(UserSession.StudentId, UserSession.StudentName); // Pass the correct StudentId and StudentName
+                BorrowReturnForm.Show(); // Show the BorrowReturnPage
+                this.Hide(); // Hide the current form
+            }
+            else
+            {
+                MessageBox.Show("User status or username is not set.");
+            }
         }
 
         private void listhesis_Load_1(object sender, EventArgs e)
@@ -63,7 +89,7 @@ namespace Thesis
             }
         }
 
-     
+
         private void btnSearch_Click(object sender, EventArgs e)
         {
             string searchValue = txt_search.Text.Trim(); // Capture input from the TextBox
@@ -86,32 +112,21 @@ namespace Thesis
                 1=1"; // Start with a condition that is always true
 
                 // Add conditions based on the selected criteria
-                try
+                if (selectedCriteria == "Title")
                 {
-                    if (selectedCriteria == "Title")
-                    {
-                        query += " AND thesis_info.Thesis_Name = @SearchValue";
-                    }
-                    else if (selectedCriteria == "Category")
-                    {
-                        query += " AND thesis_info.Category = @SearchValue";
-                    }
-                    else if (selectedCriteria == "Year_Published")
-                    {
-                        query += " AND thesis_info.Year_Publish = @SearchValue";
-                    }
-                    else if (selectedCriteria == "")
-                    {
-                        MessageBox.Show("Please select a creteria for this search ");
-                    }
-
+                    query += " AND thesis_info.Thesis_Name = @SearchValue";
                 }
-                catch
+                else if (selectedCriteria == "Category")
                 {
-                    MessageBox.Show("Creteria does not match datatype ");
+                    query += " AND thesis_info.Category = @SearchValue";
+                }
+                else if (selectedCriteria == "Status")
+                {
+                    query += " AND  thesis_info.Copies = @SearchValue";
                 }
 
 
+                MessageBox.Show("Executing Query: " + query);
                 MessageBox.Show("Searching for: " + searchValue);
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -156,6 +171,6 @@ namespace Thesis
 
         }
 
-      
+
     }
 }

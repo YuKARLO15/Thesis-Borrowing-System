@@ -7,21 +7,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Thesis.Login;
 
 namespace Thesis
 {
     public partial class admindashboard : Form
     {
-        public admindashboard(string username, string password )
+        private int adminStatus;
+        private string username;
+
+        public admindashboard(int status, string adminUsername)
         {
             InitializeComponent();
-            if ( username == "admin1"  ) {
-                lBLADDUSER.Visible = true;
-                btn_adduser.Visible = true;
+            adminStatus = status; // Store the admin status
+            username = adminUsername; // Store the username
 
+            ConfigureButtons(); // Call a method to configure buttons based on username
+        }
+        private void ConfigureButtons()
+        {
+            if (username == "admin1")
+            {
+                btn_adduser.Visible = true;
+            }
+            else
+            {
+                btn_adduser.Visible = false; // Hide this button for other admins
+                lBLADDUSER.Visible = false;
             }
         }
-
         private void add_thesis_Click(object sender, EventArgs e)
         {
             Add_Book AdminAdd_Book = new Add_Book();
@@ -46,9 +60,23 @@ namespace Thesis
 
         private void btn_back_Click(object sender, EventArgs e)
         {
+            Login.Logout();
+
+
+            Login loginForm = new Login();
+            loginForm.Show();
             this.Hide();
-            Login login = new Login();
-            login.Show();
+
+
+        }
+        public static void Logout()
+        {
+            UserSession.AdminStatus = 0;
+            UserSession.Username = null;
+            UserSession.StudentStatus = 0;
+            UserSession.StudentUsername = null;
+            UserSession.StudentId = null;
+            UserSession.StudentName = null;
         }
 
         private void admindashboard_Load(object sender, EventArgs e)
@@ -58,9 +86,9 @@ namespace Thesis
 
         private void button1_Click(object sender, EventArgs e)
         {
+            listhesis listthesis = new listhesis(adminStatus);
+            listthesis.Show();
             this.Hide();
-            listhesis listhesis = new listhesis();
-            listhesis.Show();
         }
     }
 }
