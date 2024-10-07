@@ -9,12 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using static Thesis.Login;
 
 namespace Thesis
 {
     public partial class Add_Book : Form
     {
-        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
         public Add_Book()
         {
             InitializeComponent();
@@ -36,7 +38,7 @@ namespace Thesis
                 return;
             }
 
-            if (SignupAdmin(thesis_name,  year_publish,  Copies, Category))
+            if (SignupAdmin(thesis_name, year_publish, Copies, Category))
             {
                 MessageBox.Show("Thesis Information Added");
             }
@@ -61,7 +63,7 @@ namespace Thesis
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-                        
+
                         command.Parameters.AddWithValue("@Thesis_Name", thesis_name);
                         command.Parameters.AddWithValue("@Year_Publish", year_publish);
                         command.Parameters.AddWithValue("@Copies", Copies);
@@ -98,9 +100,20 @@ namespace Thesis
 
         private void btn_back_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            admindashboard AdminDashBoard = new admindashboard();
-            AdminDashBoard.Show();
+            int adminstatus = UserSession.AdminStatus; // Access AdminStatus from static class
+            string username = UserSession.Username; // Access Username from static class
+
+            // Use adminstatus and username safely
+            if (adminstatus > 0 && !string.IsNullOrEmpty(username))
+            {
+                admindashboard Admindashboard = new admindashboard(adminstatus, username);
+                Admindashboard.Show();
+                this.Hide(); // Hide the current form
+            }
+            else
+            {
+                MessageBox.Show("Admin status or username is not set.");
+            }
         }
     }
 }

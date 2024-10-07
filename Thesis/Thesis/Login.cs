@@ -18,48 +18,71 @@ namespace Thesis
     public partial class Login : Form
     {
 
-        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
 
         public Login()
         {
             InitializeComponent();
         }
 
+        public static class UserSession
+        {
+            public static int AdminStatus { get; set; }
+            public static string Username { get; set; }
+
+            public static int StudentStatus { get; set; }
+            public static string StudentUsername { get; set; }
+            public static string StudentId { get; set; }
+            public static string StudentName { get; set; }
+        }
+
         private void btn_login_Click(object sender, EventArgs e)
         {
+            Logout();
+
             string username = txt_username.Text;
             string password = txt_password.Text;
 
+            // Admin login
             if (Admin(username, password))
             {
                 MessageBox.Show("Admin Login");
-                admindashboard adminform = new admindashboard(username,password);
-                adminform.Show();
+
+                UserSession.AdminStatus = 1;
+                UserSession.Username = username;
+                admindashboard adminForm = new admindashboard(UserSession.AdminStatus, UserSession.Username);
+                adminForm.Show();
                 this.Hide();
             }
-            else if (ValidateStudent(username, password))
-            {
-                MessageBox.Show("Login Successfully");
 
-                var (studentId, studentName) = LoadStudentInfo(username); 
+            UserSession.StudentStatus = 2;
+            UserSession.StudentUsername = username;
 
-                if (!string.IsNullOrEmpty(studentName)) 
-                {
-                    BorrowReturnPage borrowReturnPage = new BorrowReturnPage(studentId, studentName); 
-                    borrowReturnPage.Show();
-                    this.Hide();
-                }
-                else
-                {
-                    MessageBox.Show("Student name not found.");
-                }
-            }
-            else
+            var (studentId, studentName) = LoadStudentInfo(username);
+
+            if (!string.IsNullOrEmpty(studentId) && !string.IsNullOrEmpty(studentName))
             {
-                MessageBox.Show("Incorrect Student Number or Password");
+
+                MessageBox.Show("Student Login");
+                UserSession.StudentId = studentId;
+                UserSession.StudentName = studentName;
+
+                BorrowReturnPage borrowReturnPage = BorrowReturnPage.Instance(studentId, studentName);
+                borrowReturnPage.Show();
+                this.Hide();
             }
 
         }
+        public static void Logout()
+        {
+            UserSession.AdminStatus = 0; // Reset admin status
+            UserSession.Username = null; // Clear username
+            UserSession.StudentStatus = 0; // Reset student status
+            UserSession.StudentUsername = null; // Clear student username
+            UserSession.StudentId = null; // Clear student ID
+            UserSession.StudentName = null; // Clear student name
+        }
+
 
         private (string studentId, string studentName) LoadStudentInfo(string studentId)
         {

@@ -13,26 +13,41 @@ namespace Thesis
 {
     public partial class BorrowReturnPage : Form
     {
+        private static BorrowReturnPage _instance;
         private string studentId;
         private string studentName;
+
+        public static BorrowReturnPage Instance(string studentId = null, string studentName = null)
+        {
+            if (_instance == null || _instance.IsDisposed)
+            {
+                _instance = new BorrowReturnPage(studentId, studentName);
+            }
+            else
+            {
+                // If instance exists, update the details if necessary
+                _instance.studentId = studentId;
+                _instance.studentName = studentName;
+                _instance.LoadStudentDetails();
+            }
+            return _instance;
+        }
 
         public BorrowReturnPage(string studentId, string studentName) 
         {
             InitializeComponent();
             this.studentId = studentId;
             this.studentName = studentName;
+
             LoadStudentDetails();
             LoadThesisNames(); 
             LoadUniqueCategories();
-
 
             date_due.MinDate = DateTime.Now;
 
             date_current.KeyPress += date_current_KeyPress;
             date_due.KeyPress += date_due_KeyPress;
-
         }
-
 
         private void LoadStudentDetails() 
         {
@@ -40,7 +55,9 @@ namespace Thesis
             txt_studentnum.Text = studentId; 
         }
 
-        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+        private int studentStatus;
+        private string studentUsername;
 
         private void BorrowReturnPage_Load(object sender, EventArgs e)
         {
@@ -72,35 +89,48 @@ namespace Thesis
                 {
                     string thesisName = cb_thesistitle.SelectedItem?.ToString();
                     string studentID = txt_studentnum.Text;
+                    string studentName = txt_studentname.Text; // Assuming you have this textbox
+                    string category = cb_category.SelectedItem?.ToString(); // Assuming you have this dropdown
                     DateTime date_current = DateTime.Now;
                     DateTime due_date = date_due.Value;
 
-                    cb_category.Enabled = true;
-                    cb_thesistitle.Enabled = false;
-
+                    // Call the method to insert borrowing record
                     InsertBorrowingRecord(studentID, thesisName, selectedStatus, date_current, due_date);
+
                     MessageBox.Show("Borrowing process completed successfully.");
 
-                    // After borrowing, refresh the thesis titles and categories
+                    // After borrowing, show the receipt with details
+                    Receipt receipt = new Receipt(selectedStatus, studentID, studentName, category, thesisName, date_current, due_date);
+                    receipt.Show();
+
+                    // Refresh thesis titles and categories
                     LoadThesisTitles();
-                    LoadUniqueCategories(); // Load categories again to ensure they are up to date
-                  
+                    LoadUniqueCategories();
                 }
                 else if (selectedStatus == "Returning")
                 {
                     string thesisName = cb_title_return.SelectedItem?.ToString();
                     string studentID = txt_studentnum.Text;
-                    DateTime date_current = DateTime.Now;
+                    string studentName = txt_studentname.Text; // Assuming you have this textbox
+                    DateTime date_current = DateTime.Now; // Current date for returning
+                    DateTime due_date = DateTime.Now; // You can adjust this if needed
+
+                    // Get the category of the thesis being returned
+                    string category = GetThesisCategory(thesisName); // You need to implement this method
+
+                    // Process the return of the thesis
 
                     ProcessReturn(studentID, thesisName);
                     UpdateThesisStatus(thesisName, studentID);
 
                     MessageBox.Show("Returning process completed successfully.");
+                    // After returning, show the receipt with details
+                    Receipt receipt = new Receipt(selectedStatus, studentID, studentName, category, thesisName, date_current, due_date);
+                    receipt.Show();
 
-                    
+                    // Refresh thesis titles and categories
                     LoadBorrowedThesisTitles(studentID);
-                    LoadThesisTitles(); 
-        
+                    LoadThesisTitles();
                 }
                 else
                 {
@@ -111,10 +141,40 @@ namespace Thesis
             {
                 MessageBox.Show("Please select a status from the dropdown.");
             }
-            
-
-           
         }
+
+        private string GetThesisCategory(string thesisName)
+        {
+            string category = string.Empty;
+
+            // SQL query to get the category based on the thesis name
+            string query = "SELECT Category FROM thesis_info WHERE Thesis_Name = @ThesisName";
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@ThesisName", thesisName);
+                        object result = cmd.ExecuteScalar(); // Execute the query and get the category
+
+                        if (result != null)
+                        {
+                            category = result.ToString();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+
+            return category;
+        }
+
         private string GenerateBorrowedID()
         {
             string lastBorrowedId = "B_000"; 
@@ -707,12 +767,11 @@ namespace Thesis
                 LoadCategory(selectedTitle);
             }
         }
-
         private void btn_findthesis_Click(object sender, EventArgs e)
         {
+            listhesis ListThesisForm = new listhesis(studentStatus);
+            ListThesisForm.Show();
             this.Hide();
-            listhesis listhesis = new listhesis();
-            listhesis.Show();
         }
     }
 }
