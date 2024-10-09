@@ -8,7 +8,7 @@ namespace Thesis
 {
     public partial class thesislogs : Form
     {
-        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
 
         public thesislogs()
         {

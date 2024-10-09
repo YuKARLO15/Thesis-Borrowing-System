@@ -55,7 +55,7 @@ namespace Thesis
             txt_studentnum.Text = studentId; 
         }
 
-        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
         private int studentStatus;
         private string studentUsername;
 

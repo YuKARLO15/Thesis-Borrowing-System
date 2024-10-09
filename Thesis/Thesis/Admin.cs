@@ -15,7 +15,7 @@ namespace Thesis
 {
     public partial class Admin : Form
     {
-        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
         public Admin()
         {
             InitializeComponent();
@@ -47,6 +47,9 @@ namespace Thesis
 
         private bool SignupAdmin(string username, string password, string admin_name)
         {
+
+            string hashedPassword = Hashing.ComputeSha256Hash(password);
+
             string query = "INSERT INTO admin (username, password, admin_name) " +
                            "VALUES (@username, @password, @admin_name)";
 
@@ -60,7 +63,7 @@ namespace Thesis
                     {
                         // Use parameters to avoid SQL injection attacks
                         command.Parameters.AddWithValue("@username", username);
-                        command.Parameters.AddWithValue("@password", password);
+                        command.Parameters.AddWithValue("@password", hashedPassword);
                         command.Parameters.AddWithValue("@admin_name", admin_name);
 
                         int result = command.ExecuteNonQuery();
