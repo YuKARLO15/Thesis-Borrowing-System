@@ -2,12 +2,13 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
+using static Thesis.Login;
 
 namespace Thesis
 {
     public partial class thesislogs : Form
     {
-        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
 
         public thesislogs()
         {
@@ -16,9 +17,20 @@ namespace Thesis
 
         private void btn_back_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            admindashboard AdminDashBoard = new admindashboard();
-            AdminDashBoard.Show();
+            int adminstatus = UserSession.AdminStatus; // Access AdminStatus from static class
+            string username = UserSession.Username; // Access Username from static class
+
+            // Use adminstatus and username safely
+            if (adminstatus > 0 && !string.IsNullOrEmpty(username))
+            {
+                admindashboard Admindashboard = new admindashboard(adminstatus, username);
+                Admindashboard.Show();
+                this.Hide(); // Hide the current form
+            }
+            else
+            {
+                MessageBox.Show("Admin status or username is not set.");
+            }
         }
 
         private void Search_Load(object sender, EventArgs e)
@@ -34,7 +46,7 @@ namespace Thesis
                 borrowing.Borrowed_ID,
                 borrowing.Thesis_Name, 
                 borrowing.Status,
-                DATE_FORMAT(borrowing.Date_Borrowed, '%Y-%m-%d') AS Date_Borrowed, 
+                borrowing.Date_Borrowed,
                 borrowing.Student_ID,
                 student_info.Student_Name
 
@@ -42,7 +54,6 @@ namespace Thesis
                 borrowing
             INNER JOIN 
                 student_info ON borrowing.Student_ID = student_info.Student_ID";
-
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -63,8 +74,6 @@ namespace Thesis
                 }
             }
         }
-
-
 
         // Trigger the search on button click using a single TextBox
         private void btnSearch_Click(object sender, EventArgs e)
@@ -94,37 +103,21 @@ namespace Thesis
                 1=1"; // Start with a condition that is always true
 
                 // Add conditions based on the selected criteria
-                try
+                if (selectedCriteria == "Title")
                 {
-                    if (selectedCriteria == "Title")
-                    {
-                        query += " AND borrowing.Thesis_Name = @SearchValue";
-                    }
-                    else if (selectedCriteria == "Status")
-                    {
-                        query += " AND borrowing.Status = @SearchValue";
-                    }
-                    else if (selectedCriteria == "Student_ID")
-                    {
-                        query += " AND borrowing.Student_ID = @SearchValue";
-                    }
-                    else if (selectedCriteria == "Student_Name")
-                    {
-                        query += " AND student_info.Student_Name = @SearchValue";
-                    }
-                    else if (selectedCriteria == "Date_Borrowed")
-                    {
-                        query += " AND borrowing.Date_Borrowed = @SearchValue";
-                    }
-                    else if (selectedCriteria == "")
-                    {
-                        MessageBox.Show("Please select a creteria for this search ");
-                    }
-
+                    query += " AND thesis_info.Thesis_Name = @SearchValue";
                 }
-                catch
+                else if (selectedCriteria == "Status")
                 {
-                    MessageBox.Show("Creteria does not match datatype ");
+                    query += " AND borrowing.Status = @SearchValue";
+                }
+                else if (selectedCriteria == "Student_ID")
+                {
+                    query += " AND borrowing.Student_ID = @SearchValue";
+                }
+                else if (selectedCriteria == "Student_Name")
+                {
+                    query += " AND student_info.Student_Name = @SearchValue";
                 }
 
                 MessageBox.Show("Executing Query: " + query);
