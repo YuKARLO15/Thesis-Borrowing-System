@@ -25,7 +25,7 @@ namespace Thesis
         }
 
 
-        string connectionString = "Server=localhost;Port=4306;Database=thesis_management;Uid=root;Pwd=;";
+        string connectionString = "Server=localhost;Port=3306;Database=thesis_management;Uid=root;Pwd=;";
         private void btn_back_Click_1(object sender, EventArgs e)
         {
             int adminstatus = UserSession.AdminStatus;

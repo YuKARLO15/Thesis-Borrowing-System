@@ -29,6 +29,7 @@ namespace Thesis
             if (username == "admin1")
             {
                 btn_adduser.Visible = true;
+                lBLADDUSER.Visible = true;
             }
             else
             {
