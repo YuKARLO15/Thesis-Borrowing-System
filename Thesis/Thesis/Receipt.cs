@@ -30,5 +30,10 @@ namespace Thesis
         {
 
         }
+
+        private void Receipt_FormClosing(object sender, FormClosingEventArgs e)
+        {
+      
+        }
     }
 }

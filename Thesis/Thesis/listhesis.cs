@@ -55,6 +55,8 @@ namespace Thesis
         private void listhesis_Load_1(object sender, EventArgs e)
         {
             LoadData();
+
+            cmbSearchCriteria.SelectedIndex = 0;
         }
 
         private void LoadData()
@@ -92,13 +94,15 @@ namespace Thesis
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string searchValue = txt_search.Text.Trim(); // Capture input from the TextBox
-            string selectedCriteria = cmbSearchCriteria.SelectedItem.ToString(); // Get selected criteria
-
-            if (!string.IsNullOrEmpty(searchValue))
+            try
             {
-                // Initialize the query based on the selected criteria
-                string query = @"
+                string searchValue = txt_search.Text.Trim(); // Capture input from the TextBox
+                string selectedCriteria = cmbSearchCriteria.SelectedItem.ToString(); // Get selected criteria
+
+                if (!string.IsNullOrEmpty(searchValue))
+                {
+                    // Initialize the query based on the selected criteria
+                    string query = @"
             SELECT 
                 thesis_info.Thesis_Name, 
                 thesis_info.Year_Publish,  
@@ -111,58 +115,67 @@ namespace Thesis
             WHERE
                 1=1"; // Start with a condition that is always true
 
-                // Add conditions based on the selected criteria
-                if (selectedCriteria == "Title")
-                {
-                    query += " AND thesis_info.Thesis_Name = @SearchValue";
-                }
-                else if (selectedCriteria == "Category")
-                {
-                    query += " AND thesis_info.Category = @SearchValue";
-                }
-                else if (selectedCriteria == "Status")
-                {
-                    query += " AND  thesis_info.Copies = @SearchValue";
-                }
-
-
-                MessageBox.Show("Executing Query: " + query);
-                MessageBox.Show("Searching for: " + searchValue);
-
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    try
+                    // Add conditions based on the selected criteria
+                    if (selectedCriteria == "Title")
                     {
-                        connection.Open();
-                        using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                        query += " AND thesis_info.Thesis_Name = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Category")
+                    {
+                        query += " AND thesis_info.Category = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Status")
+                    {
+                        query += " AND  thesis_info.Copies = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Year_Published")
+                    {
+                        query += " AND  thesis_info.Year_Publish = @SearchValue";
+                    }
+
+
+                    //MessageBox.Show("Executing Query: " + query);
+                    //MessageBox.Show("Searching for: " + searchValue);
+
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
+                    {
+                        try
                         {
-                            cmd.Parameters.AddWithValue("@SearchValue", searchValue); // Pass exact search value
-
-                            DataTable dataTable = new DataTable();
-                            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                            adapter.Fill(dataTable);
-
-
-                            if (dataTable.Rows.Count > 0)
+                            connection.Open();
+                            using (MySqlCommand cmd = new MySqlCommand(query, connection))
                             {
-                                ThesisGridView.DataSource = dataTable; // Set the DataGridView source
-                            }
-                            else
-                            {
-                                MessageBox.Show("No results found."); // Notify if no results
-                                ThesisGridView.DataSource = null; // Clear the DataGridView if no results
+                                cmd.Parameters.AddWithValue("@SearchValue", searchValue); // Pass exact search value
+
+                                DataTable dataTable = new DataTable();
+                                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                                adapter.Fill(dataTable);
+
+
+                                if (dataTable.Rows.Count > 0)
+                                {
+                                    ThesisGridView.DataSource = dataTable; // Set the DataGridView source
+                                }
+                                else
+                                {
+                                    MessageBox.Show("No results found."); // Notify if no results
+                                    ThesisGridView.DataSource = null; // Clear the DataGridView if no results
+                                }
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error: " + ex.Message); // Show error messages
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message); // Show error messages
+                        }
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Please enter a value to search."); // Prompt for input
+                }
             }
-            else
+            catch (NullReferenceException ex)
             {
-                MessageBox.Show("Please enter a value to search."); // Prompt for input
+                MessageBox.Show("Error: " + ex.Message); // Show error messages
             }
         }
 
@@ -171,6 +184,9 @@ namespace Thesis
 
         }
 
-
+        private void listhesis_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

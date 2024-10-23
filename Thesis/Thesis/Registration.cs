@@ -42,16 +42,15 @@ namespace Thesis
             if (SignupUser(studentNumber, password, studentName, course))
             {
                 MessageBox.Show("Sign-up successful!");
+                Login loginform = new Login();
+                loginform.Show();
+                this.Dispose();
             }
             else
             {
                 lblerror.Visible = true;
                 lblerror.Text = "Sign-up failed. Please try again.";
             }
-
-            Login loginform = new Login();
-            loginform.ShowDialog();
-            this.Dispose();
         }
 
         private bool SignupUser(string studentNumber, string password, string studentName, string course)
@@ -101,6 +100,19 @@ namespace Thesis
         private void txt_studentnumber_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Login login_form = new Login();
+            login_form.Show();
+
+        }
+
+        private void Registration_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

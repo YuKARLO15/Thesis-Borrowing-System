@@ -48,10 +48,10 @@ namespace Thesis
             "Title",
             "Category",
             "Year_Published"});
-            this.cmbSearchCriteria.Location = new System.Drawing.Point(376, 170);
-            this.cmbSearchCriteria.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbSearchCriteria.Location = new System.Drawing.Point(282, 138);
+            this.cmbSearchCriteria.Margin = new System.Windows.Forms.Padding(2);
             this.cmbSearchCriteria.Name = "cmbSearchCriteria";
-            this.cmbSearchCriteria.Size = new System.Drawing.Size(121, 24);
+            this.cmbSearchCriteria.Size = new System.Drawing.Size(92, 21);
             this.cmbSearchCriteria.TabIndex = 19;
             // 
             // btn_back
@@ -59,10 +59,9 @@ namespace Thesis
             this.btn_back.BackColor = System.Drawing.Color.DarkSlateGray;
             this.btn_back.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_back.ForeColor = System.Drawing.Color.White;
-            this.btn_back.Location = new System.Drawing.Point(880, 43);
-            this.btn_back.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_back.Location = new System.Drawing.Point(660, 35);
             this.btn_back.Name = "btn_back";
-            this.btn_back.Size = new System.Drawing.Size(91, 34);
+            this.btn_back.Size = new System.Drawing.Size(68, 28);
             this.btn_back.TabIndex = 18;
             this.btn_back.Text = "BACK";
             this.btn_back.UseVisualStyleBackColor = false;
@@ -80,21 +79,19 @@ namespace Thesis
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.ThesisGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.ThesisGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ThesisGridView.Location = new System.Drawing.Point(84, 234);
-            this.ThesisGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.ThesisGridView.Location = new System.Drawing.Point(63, 190);
             this.ThesisGridView.Name = "ThesisGridView";
             this.ThesisGridView.ReadOnly = true;
             this.ThesisGridView.RowHeadersWidth = 51;
-            this.ThesisGridView.Size = new System.Drawing.Size(843, 277);
+            this.ThesisGridView.Size = new System.Drawing.Size(632, 225);
             this.ThesisGridView.TabIndex = 17;
             this.ThesisGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ThesisGridView_CellContentClick);
             // 
             // txt_search
             // 
-            this.txt_search.Location = new System.Drawing.Point(169, 170);
-            this.txt_search.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_search.Location = new System.Drawing.Point(127, 138);
             this.txt_search.Name = "txt_search";
-            this.txt_search.Size = new System.Drawing.Size(179, 22);
+            this.txt_search.Size = new System.Drawing.Size(135, 20);
             this.txt_search.TabIndex = 15;
             // 
             // btn_Sall
@@ -102,10 +99,9 @@ namespace Thesis
             this.btn_Sall.BackColor = System.Drawing.Color.DarkSlateGray;
             this.btn_Sall.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Sall.ForeColor = System.Drawing.Color.White;
-            this.btn_Sall.Location = new System.Drawing.Point(813, 160);
-            this.btn_Sall.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Sall.Location = new System.Drawing.Point(610, 130);
             this.btn_Sall.Name = "btn_Sall";
-            this.btn_Sall.Size = new System.Drawing.Size(105, 46);
+            this.btn_Sall.Size = new System.Drawing.Size(79, 37);
             this.btn_Sall.TabIndex = 21;
             this.btn_Sall.Text = "ALL";
             this.btn_Sall.UseVisualStyleBackColor = false;
@@ -116,10 +112,9 @@ namespace Thesis
             this.btn_search.BackColor = System.Drawing.Color.DarkSlateGray;
             this.btn_search.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_search.ForeColor = System.Drawing.Color.White;
-            this.btn_search.Location = new System.Drawing.Point(591, 159);
-            this.btn_search.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_search.Location = new System.Drawing.Point(443, 129);
             this.btn_search.Name = "btn_search";
-            this.btn_search.Size = new System.Drawing.Size(215, 47);
+            this.btn_search.Size = new System.Drawing.Size(161, 38);
             this.btn_search.TabIndex = 20;
             this.btn_search.Text = "SEARCH";
             this.btn_search.UseVisualStyleBackColor = false;
@@ -127,11 +122,11 @@ namespace Thesis
             // 
             // listhesis
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Thesis.Properties.Resources.Search__1_;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1032, 559);
+            this.ClientSize = new System.Drawing.Size(774, 454);
             this.Controls.Add(this.btn_Sall);
             this.Controls.Add(this.btn_search);
             this.Controls.Add(this.cmbSearchCriteria);
@@ -139,9 +134,11 @@ namespace Thesis
             this.Controls.Add(this.ThesisGridView);
             this.Controls.Add(this.txt_search);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "listhesis";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "listhesis";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.listhesis_FormClosing);
             this.Load += new System.EventHandler(this.listhesis_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.ThesisGridView)).EndInit();
             this.ResumeLayout(false);
@@ -158,7 +155,7 @@ namespace Thesis
         {
             LoadData();
             txt_search.Text = "";
-            cmbSearchCriteria.SelectedIndex = -1;
+            cmbSearchCriteria.SelectedIndex = 0;
         }
 
         #endregion

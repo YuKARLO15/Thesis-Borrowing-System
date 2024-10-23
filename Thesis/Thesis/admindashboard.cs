@@ -91,5 +91,10 @@ namespace Thesis
             listthesis.Show();
             this.Hide();
         }
+
+        private void admindashboard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

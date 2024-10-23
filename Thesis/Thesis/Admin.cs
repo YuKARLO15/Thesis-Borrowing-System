@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,11 +32,15 @@ namespace Thesis
                string.IsNullOrWhiteSpace(password) ||
                string.IsNullOrWhiteSpace(admin_name))
             {
+                MessageBox.Show("Incomplete information. Please fill-up all the forms.");
                 return;
             }
 
             if (SignupAdmin(username, password, admin_name))
             {
+                txt_username.Text = "";
+                txt_password.Text = "";
+                txt_adminname.Text = "";
                 MessageBox.Show("You are now Registered!");
             }
             else
@@ -87,6 +92,11 @@ namespace Thesis
             admindashboard Admindashboard = new admindashboard(adminstatus, username);
             Admindashboard.Show();
             this.Hide();
+        }
+
+        private void Admin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -773,5 +773,10 @@ namespace Thesis
             ListThesisForm.Show();
             this.Hide();
         }
+
+        private void BorrowReturnPage_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

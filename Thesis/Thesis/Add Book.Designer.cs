@@ -110,8 +110,11 @@
             this.Controls.Add(this.txt_thesis);
             this.Controls.Add(this.txt_category);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Add_Book";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add_Book";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Add_Book_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

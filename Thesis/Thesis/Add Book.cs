@@ -115,5 +115,10 @@ namespace Thesis
                 MessageBox.Show("Admin status or username is not set.");
             }
         }
+
+        private void Add_Book_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
