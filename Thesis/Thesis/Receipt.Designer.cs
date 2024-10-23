@@ -137,8 +137,11 @@
             this.Controls.Add(this.lbl_studentnumber);
             this.Controls.Add(this.lbl_process);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Receipt";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Receipt";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Receipt_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

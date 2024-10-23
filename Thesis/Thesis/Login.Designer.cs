@@ -93,8 +93,11 @@
             this.Controls.Add(this.btn_signup);
             this.Controls.Add(this.btn_login);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Login";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Login_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

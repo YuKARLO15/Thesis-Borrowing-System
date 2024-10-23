@@ -36,6 +36,8 @@ namespace Thesis
         private void Search_Load(object sender, EventArgs e)
         {
             LoadData();
+
+            cmbSearchCriteria.SelectedIndex = 0;
         }
 
         private void LoadData()
@@ -78,13 +80,15 @@ namespace Thesis
         // Trigger the search on button click using a single TextBox
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string searchValue = txt_search.Text.Trim(); // Capture input from the TextBox
-            string selectedCriteria = cmbSearchCriteria.SelectedItem.ToString(); // Get selected criteria
-
-            if (!string.IsNullOrEmpty(searchValue))
+            try
             {
-                // Initialize the query based on the selected criteria
-                string query = @"
+                string searchValue = txt_search.Text.Trim(); // Capture input from the TextBox
+                string selectedCriteria = cmbSearchCriteria.SelectedItem.ToString(); // Get selected criteria
+
+                if (!string.IsNullOrEmpty(searchValue))
+                {
+                    // Initialize the query based on the selected criteria
+                    string query = @"
             SELECT 
                 borrowing.Borrowed_ID,
                 borrowing.Thesis_Name, 
@@ -102,61 +106,82 @@ namespace Thesis
             WHERE
                 1=1"; // Start with a condition that is always true
 
-                // Add conditions based on the selected criteria
-                if (selectedCriteria == "Title")
-                {
-                    query += " AND thesis_info.Thesis_Name = @SearchValue";
-                }
-                else if (selectedCriteria == "Status")
-                {
-                    query += " AND borrowing.Status = @SearchValue";
-                }
-                else if (selectedCriteria == "Student_ID")
-                {
-                    query += " AND borrowing.Student_ID = @SearchValue";
-                }
-                else if (selectedCriteria == "Student_Name")
-                {
-                    query += " AND student_info.Student_Name = @SearchValue";
-                }
-
-                MessageBox.Show("Executing Query: " + query);
-                MessageBox.Show("Searching for: " + searchValue);
-
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    try
+                    // Add conditions based on the selected criteria
+                    if (selectedCriteria == "Title")
                     {
-                        connection.Open();
-                        using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                        query += " AND borrowing.Thesis_Name = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Status")
+                    {
+                        query += " AND borrowing.Status = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Student_ID")
+                    {
+                        query += " AND borrowing.Student_ID = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Student_Name")
+                    {
+                        query += " AND student_info.Student_Name = @SearchValue";
+                    }
+                    else if (selectedCriteria == "Date_Borrowed")
+                    {
+                        // Convert the search value to a DateTime object and format it
+                        if (DateTime.TryParse(searchValue, out DateTime searchDate))
                         {
-                            cmd.Parameters.AddWithValue("@SearchValue", searchValue); // Pass exact search value
-
-                            DataTable dataTable = new DataTable();
-                            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                            adapter.Fill(dataTable);
-
-
-                            if (dataTable.Rows.Count > 0)
-                            {
-                                ThesisGridView.DataSource = dataTable; // Set the DataGridView source
-                            }
-                            else
-                            {
-                                MessageBox.Show("No results found."); // Notify if no results
-                                ThesisGridView.DataSource = null; // Clear the DataGridView if no results
-                            }
+                            // Use the appropriate date format for your SQL database
+                            string formattedDate = searchDate.ToString("yyyy-MM-dd"); // Format as 'yyyy-MM-dd'
+                            query += " AND borrowing.Date_Borrowed = @SearchValue";
+                            searchValue = formattedDate; // Update searchValue with the formatted date
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid date format. Please enter a valid date."); // Prompt for valid date
+                            return;
                         }
                     }
-                    catch (Exception ex)
+
+                    //MessageBox.Show("Executing Query: " + query);
+                    //MessageBox.Show("Searching for: " + searchValue);
+
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
                     {
-                        MessageBox.Show("Error: " + ex.Message); // Show error messages
+                        try
+                        {
+                            connection.Open();
+                            using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                            {
+                                cmd.Parameters.AddWithValue("@SearchValue", searchValue); // Pass exact search value
+
+                                DataTable dataTable = new DataTable();
+                                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                                adapter.Fill(dataTable);
+
+
+                                if (dataTable.Rows.Count > 0)
+                                {
+                                    ThesisGridView.DataSource = dataTable; // Set the DataGridView source
+                                }
+                                else
+                                {
+                                    MessageBox.Show("No results found."); // Notify if no results
+                                    ThesisGridView.DataSource = null; // Clear the DataGridView if no results
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message); // Show error messages
+                        }
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Please enter a value to search."); // Prompt for input
+                }
             }
-            else
+            catch (NullReferenceException ex)
             {
-                MessageBox.Show("Please enter a value to search."); // Prompt for input
+                MessageBox.Show("Error: " + ex.Message); // Show error messages
             }
         }
 
@@ -164,12 +189,17 @@ namespace Thesis
         {
             LoadData();
             txt_search.Text = "";
-            cmbSearchCriteria.SelectedIndex = -1;
+            cmbSearchCriteria.SelectedIndex = 0;
         }
 
         private void ThesisGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void thesislogs_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

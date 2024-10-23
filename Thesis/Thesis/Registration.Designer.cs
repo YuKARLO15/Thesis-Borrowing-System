@@ -35,6 +35,7 @@
             this.txt_course = new System.Windows.Forms.TextBox();
             this.btn_signup = new System.Windows.Forms.Button();
             this.lblerror = new System.Windows.Forms.Label();
+            this.btn_back = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txt_studentnumber
@@ -92,7 +93,7 @@
             this.lblerror.BackColor = System.Drawing.Color.Transparent;
             this.lblerror.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblerror.ForeColor = System.Drawing.Color.White;
-            this.lblerror.Location = new System.Drawing.Point(222, 384);
+            this.lblerror.Location = new System.Drawing.Point(311, 374);
             this.lblerror.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblerror.Name = "lblerror";
             this.lblerror.Size = new System.Drawing.Size(114, 22);
@@ -101,6 +102,19 @@
             this.lblerror.UseMnemonic = false;
             this.lblerror.Visible = false;
             // 
+            // btn_back
+            // 
+            this.btn_back.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.btn_back.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_back.ForeColor = System.Drawing.Color.White;
+            this.btn_back.Location = new System.Drawing.Point(75, 366);
+            this.btn_back.Name = "btn_back";
+            this.btn_back.Size = new System.Drawing.Size(122, 40);
+            this.btn_back.TabIndex = 14;
+            this.btn_back.Text = "BACK";
+            this.btn_back.UseVisualStyleBackColor = false;
+            this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
+            // 
             // Registration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -108,6 +122,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_back);
             this.Controls.Add(this.lblerror);
             this.Controls.Add(this.btn_signup);
             this.Controls.Add(this.txt_course);
@@ -115,8 +130,11 @@
             this.Controls.Add(this.txt_password);
             this.Controls.Add(this.txt_studentnumber);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Registration";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registration";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Registration_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,5 +148,6 @@
         private System.Windows.Forms.TextBox txt_course;
         private System.Windows.Forms.Button btn_signup;
         private System.Windows.Forms.Label lblerror;
+        private System.Windows.Forms.Button btn_back;
     }
 }

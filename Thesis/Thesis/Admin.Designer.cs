@@ -99,8 +99,11 @@
             this.Controls.Add(this.txt_password);
             this.Controls.Add(this.txt_username);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Admin";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Admin";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Admin_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
